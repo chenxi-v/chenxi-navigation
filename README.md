@@ -1,142 +1,231 @@
-# 🌐 个人导航网站
+# 晨曦导航
 
-这是一个 **基于纯静态技术栈的个人导航网站**，主打 **极简设计**，适合部署在 **GitHub + Zeabur + Cloudflare** 等平台，国内访问稳定，维护成本极低。
+一个现代化的个人导航网站，采用 React 19 + Vite 7 + Tailwind CSS 构建，支持深色模式、实时天气显示和自定义书签管理。
 
-> ✅ 无数据库
->
-> ✅ 无后端依赖
->
-> ✅ 修改 JSON 即可更新导航
->
-> ✅ 适合长期自用 / 轻量分享
+## 项目结构
 
----
-
-## ✨ 功能特性
-
-* 📌 **分类导航卡片**（支持本地图标）
-* 🖼️ **自定义背景图片**（支持全屏铺满）
-* 🌙 极简 UI 设计
-* 🔍 内置搜索框（可选）
-* 🌦️ 天气信息显示
-* 🕒 实时时间与日期展示
-* 📱 完整响应式设计（桌面 / 手机）
-* 🚀 Zeabur 免费部署
-
----
-
-## 📁 项目结构
-
-```text
-zeabur-navigation/
-├── index.html             # 主页面
-├── nav-data.json          # 导航数据配置
-├── zeabur.json            # Zeabur平台配置
-├── assets/
-│   ├── backgrounds/       # 背景图片目录
-│   └── icons/             # 网站图标目录
-│
-├── WeatherIsland.js        # 天气插件
-└── README.md              # 部署说明
+```
+chenxidaohang-main/
+  ├── public/                      # 静态资源目录
+  │   ├── assets/
+  │   │   ├── icons/              # 网站图标目录
+  │   │   │   ├── github.svg
+  │   │   │   ├── gitlab.svg
+  │   │   │   └── ...
+  │   │   └── backgrounds/        # 背景图片目录
+  │   │       ├── kumtanom.jpg
+  │   │       ├── kumtanom-dark.png
+  │   │       └── ...
+  │   └── nav-data.json          # 导航数据配置
+  │
+  ├── src/
+  │   ├── components/             # React 组件
+  │   │   ├── BackToTop.jsx
+  │   │   ├── CategoryCard.jsx
+  │   │   ├── CategoryNav.jsx
+  │   │   ├── LinkItem.jsx
+  │   │   ├── SearchBox.jsx
+  │   │   ├── ThemeToggle.jsx
+  │   │   └── WeatherWidget.jsx
+  │   ├── context/               # React Context
+  │   │   └── ThemeContext.jsx
+  │   ├── App.jsx                # 主应用组件
+  │   ├── index.css              # 全局样式
+  │   └── main.jsx              # 应用入口
+  │
+  ├── index.html                 # HTML 模板
+  ├── package.json              # 项目依赖
+  ├── tailwind.config.js        # Tailwind CSS 配置
+  ├── vite.config.js            # Vite 配置
+  └── README.md                 # 项目说明文档
 ```
 
----
+## 功能特性
 
-## ⚙️ 使用方法
+- 📱 响应式设计，完美支持移动端和桌面端
+- 🌓 深色/浅色模式切换
+- 🔍 多搜索引擎支持（必应、谷歌、百度）
+- 🌤️ 实时天气信息（基于 Open-Meteo API）
+- ⏰ 实时时间和日期显示
+- 📚 可自定义的书签分类管理
+- 🎨 现代化 UI 设计，毛玻璃效果
+- ⚡ 快速加载，优化性能
+- 🎯 平滑滚动和动画效果
 
-### 1️⃣ 修改导航内容
+## 技术栈
 
-所有导航数据都在：
+- **React 19** - 用户界面库
+- **Vite 7** - 构建工具和开发服务器
+- **Tailwind CSS** - CSS 框架
+- **Open-Meteo API** - 天气数据
+- **Cloudflare Pages** - 部署平台
 
-```json
-nav-data.json
+## 本地开发
+
+### 安装依赖
+
+```bash
+npm install
 ```
 
-示例：
+### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+访问 http://localhost:5173 查看网站
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+构建后的文件将生成在 `dist` 目录中
+
+### 预览生产构建
+
+```bash
+npm run preview
+```
+
+## 部署到 Cloudflare Pages
+
+### 方法一：通过 GitHub 集成（推荐）
+
+1. **将项目推送到 GitHub**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/your-username/chenxidaohang-main.git
+   git push -u origin main
+   ```
+
+2. **在 Cloudflare Pages 创建项目**
+   - 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+   - 进入 **Workers & Pages** → **Pages**
+   - 点击 **Create application** → **Connect to Git**
+   - 选择 GitHub 并授权访问您的仓库
+   - 选择 `chenxidaohang-main` 仓库
+
+3. **配置构建设置**
+   - **Project name**: chenxidaohang-main（或自定义）
+   - **Production branch**: main
+   - **Framework preset**: Vite
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+
+4. **部署**
+   - 点击 **Save and Deploy**
+   - 等待构建完成（通常需要 1-2 分钟）
+   - 部署成功后，Cloudflare 会提供一个 `.pages.dev` 域名
+
+### 方法二：直接上传 dist 文件夹
+
+1. 构建项目：
+   ```bash
+   npm run build
+   ```
+
+2. 在 Cloudflare Pages 创建项目：
+   - 进入 **Workers & Pages** → **Pages**
+   - 点击 **Create application** → **Upload assets**
+   - 将 `dist` 文件夹中的所有文件上传
+   - 点击 **Deploy Site**
+
+### 自定义域名（可选）
+
+1. 在 Pages 项目设置中进入 **Custom domains**
+2. 点击 **Set up a custom domain**
+3. 输入您的域名（如 `nav.yourdomain.com`）
+4. 按照提示配置 DNS 记录
+
+## 自定义配置
+
+### 修改导航数据
+
+编辑 `public/nav-data.json` 文件来添加或修改书签：
 
 ```json
 {
-  "开发工具": [
+  "categories": [
+    {
+      "id": "common",
+      "name": "我的常用",
+      "icon": "⭐",
+      "links": [
         {
-          "name": "GitHub",
-          "url": "https://github.com",
-          "icon": "assets/icons/github.svg",
-          "desc": "全球最大的代码托管和协作开发平台，支持 Git 版本控制"
-        },
+          "name": "网站名称",
+          "url": "https://example.com",
+          "icon": "assets/icons/example.svg",
+          "desc": "网站描述"
+        }
+      ]
+    }
   ]
 }
 ```
 
-* `name`：名称
-* `url`：点击跳转地址
-* `icon`：本地图标路径（可选）
+### 添加自定义图标
 
----
+1. 将图标文件放入 `public/assets/icons/` 目录
+2. 在 `nav-data.json` 中引用图标路径
 
-### 2️⃣ 更换背景图片
+### 修改背景图片
 
-将图片放入：
+1. 将背景图片放入 `public/assets/backgrounds/` 目录
+2. 在 `src/App.jsx` 中修改背景图片路径：
+   ```jsx
+   style={{ 
+     backgroundImage: isDark 
+       ? 'url(/assets/backgrounds/your-dark-bg.jpg)' 
+       : 'url(/assets/backgrounds/your-light-bg.jpg)'
+   }}
+   ```
 
-```text
-assets/backgrounds/
-```
-```html中修改
-body {
-  background: url('assets/backgrounds/kumtanom.jpg') no-repeat center center fixed;
-  background-size: cover;
+### 修改主题颜色
+
+编辑 `tailwind.config.js` 文件来自定义主题颜色：
+
+```javascript
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          400: '#4ade80',
+          500: '#22c55e',
+        }
+      }
+    }
+  }
 }
 ```
 
-> ⚠️ 注意：路径大小写需与仓库完全一致（Linux 区分大小写）
+## 浏览器支持
 
----
+- Chrome (最新版本)
+- Firefox (最新版本)
+- Safari (最新版本)
+- Edge (最新版本)
 
-## 🚀 部署到 Zeabur（推荐）
-
-1. 将本仓库推送到 GitHub
-2. 打开 [https://zeabur.com](https://zeabur.com)
-3. New Project → Deploy from GitHub
-4. 选择本仓库
-5. 类型选择 **Static Site**
-6. Build / Output 留空
-7. 点击 Deploy
-
-部署完成后即可通过：
-
-```text
-部署成功后通过设置中的网络-公网访问选项自定义域名
-```
-
-访问。
-
----
-
-## 🧩 技术说明
-
-* 本项目为 **纯静态网站**，不依赖任何后端服务
-* 天气数据使用第三方公开 API（已做缓存与兜底）
-* 所有资源均为本地文件，避免 CDN / DNS 不稳定问题
-* 适合中国大陆网络环境
-
----
-
-## 🛠️ 可扩展方向
-
-* 🌙 深色 / 浅色模式切换
-* 🔍 本地搜索增强
-* 🔐 私人访问密码
-* 📦 改为 JSON + 后台管理（Node.js）
-* 📄 PWA / 离线访问
-
----
-
-## 📄 License
+## 许可证
 
 MIT License
 
----
+## 贡献
 
-如果你觉得这个项目对你有帮助，欢迎 ⭐ Star 或 Fork 自用。
+欢迎提交 Issue 和 Pull Request！
 
-Enjoy it 🚀
+## 更新日志
 
+### v1.0.0 (2024)
+- 初始版本发布
+- 支持 React 19 + Vite 7 + Tailwind CSS
+- 深色/浅色模式切换
+- 实时天气和时间显示
+- 多搜索引擎支持
+- 响应式设计

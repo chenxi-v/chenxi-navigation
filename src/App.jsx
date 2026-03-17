@@ -45,7 +45,7 @@ function AppContent() {
         </main>
 
         <footer className="text-center text-black dark:text-slate-200 py-5 text-sm opacity-80">
-          <p>© 2024 晨曦导航 - 极简灵动风格</p>
+          <p>© 2026 晨曦导航 - 极简灵动风格</p>
         </footer>
       </div>
 
